@@ -1,0 +1,53 @@
+# SPDX-FileCopyrightText: Josef Andersson
+# SPDX-License-Identifier: CC0-1.0
+
+name: "Gommitlint"
+author: "Itiquette"
+description: |
+  Validates commit messages against commit standards.
+  Ensures commits follow best practices for clear and maintainable history.
+  
+  Example usage:
+  ```yaml
+  - uses: itiquette/gommitlint@v1
+    with:
+      comparebranch: 'develop'
+  ```
+  
+  For more information, visit: https://github.com/itiquette/gommitlint
+
+env:
+  LOG_LEVEL: "info"
+  GITHUB_TOKEN: ${{ inputs.token }}
+
+branding:
+  icon: "check-square"
+  color: "orange"
+
+inputs:
+  token:
+    description: "GitHub token with repo:status access (defaults to {{ secrets.GITHUB_TOKEN }})"
+    required: false
+    default: ${{ github.token }}
+  comparebranch:
+    description: "Base branch for comparison (e.g., main, master)"
+    required: false
+    default: "main"
+    pattern: '^[a-zA-Z0-9_.-]+$'
+
+# outputs:
+#   invalid_commits:
+#     description: "Number of commits that failed validation"
+#   validation_status:
+#     description: "Overall validation status (success/failure)"
+#   validation_errors:
+#     description: "JSON array of validation errors found"
+
+runs:
+  using: "docker"
+  image: "docker://ghcr.io/itiquette/gommitlint:v0.0.1"
+  args:
+    - validate
+    - --base-branch
+    - ${{ inputs.comparebranch }}
+
