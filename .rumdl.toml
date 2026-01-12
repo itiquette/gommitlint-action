@@ -1,0 +1,13 @@
+# SPDX-FileCopyrightText: The Gommitlint Action Authors
+#
+# SPDX-License-Identifier: CC0-1.0
+
+# rumdl configuration
+# https://github.com/rvben/rumdl
+
+[global]
+# Disable MD013 (line length) - prose shouldn't be wrapped at 80 chars
+# Disable MD033 (inline HTML) - needed for centered logo and badges in README
+disable = ["MD013", "MD033"]
+# Exclude auto-generated files
+exclude = ["CHANGELOG.md"]

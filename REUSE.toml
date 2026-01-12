@@ -1,0 +1,46 @@
+# SPDX-FileCopyrightText: The Gommitlint Action Authors
+#
+# SPDX-License-Identifier: CC0-1.0
+
+version = 1
+
+# Documentation files - CC0-1.0 (public domain dedication)
+[[annotations]]
+path = [
+  ".github/pull_request_template.md",
+  "renovate.json",
+  "**/*.md",
+]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "The Gommitlint Action Authors"
+SPDX-License-Identifier = "CC0-1.0"
+
+# Configuration files - CC0-1.0
+[[annotations]]
+path = [
+  ".chglog/*.tpl",
+  ".chglog/*.yml",
+  ".github/workflows/*.yml",
+  ".github/ISSUE_TEMPLATE/*.yaml",
+  ".gitignore",
+  ".gitattributes",
+  ".actionlint.yaml",
+  ".gitleaks.toml",
+  ".mise.toml",
+  ".rumdl.toml",
+  "scripts/ci/versions.env",
+]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "The Gommitlint Action Authors"
+SPDX-License-Identifier = "CC0-1.0"
+
+# Code files - EUPL-1.2
+[[annotations]]
+path = [
+  "action.yml",
+  "justfile",
+  "scripts/**/*.sh",
+]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "The Gommitlint Action Authors"
+SPDX-License-Identifier = "EUPL-1.2"

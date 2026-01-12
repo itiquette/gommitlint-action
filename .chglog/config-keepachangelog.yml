@@ -1,0 +1,46 @@
+# SPDX-FileCopyrightText: The Gommitlint Action Authors
+#
+# SPDX-License-Identifier: CC0-1.0
+style: ""
+template: CHANGELOG-keepachangelog.tpl
+info:
+  title: CHANGELOG
+  repository_url: https://github.com/itiquette/gommitlint-action
+options:
+  tag_filter_pattern: '^v'
+  sort: semver
+  commits:
+    sort_by: Scope
+  commit_groups:
+    group_by: Type
+    sort_by: Title
+    title_order:
+      - Added
+      - Changed
+      - Deprecated
+      - Removed
+      - Fixed
+      - Security
+    title_maps:
+      feat: Added
+      fix: Fixed
+      perf: Changed
+      refactor: Changed
+      docs: Changed
+      style: Changed
+      test: Changed
+      build: Changed
+      ci: Changed
+      chore: Changed
+      sec: Security
+      security: Security
+      revert: Changed
+  header:
+    pattern: "^(\\w*)(?:\\(([\\w$\\.\\-\\*\\s]*)\\))?!?\\:\\s(.*)$"
+    pattern_maps:
+      - Type
+      - Scope
+      - Subject
+  notes:
+    keywords:
+      - BREAKING CHANGE

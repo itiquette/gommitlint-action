@@ -1,0 +1,6 @@
+# SPDX-FileCopyrightText: The Gommitlint Action Authors
+#
+# SPDX-License-Identifier: CC0-1.0
+
+# Gitleaks configuration for gommitlint-action
+# No special allowlist needed - public keys are now in the profile repo

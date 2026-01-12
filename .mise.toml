@@ -1,0 +1,43 @@
+# SPDX-FileCopyrightText: The Gommitlint Action Authors
+#
+# SPDX-License-Identifier: CC0-1.0
+
+# Mise configuration for gommitlint-action development tools
+# Ensures reproducible development environment across all contributors
+# See: https://mise.jdx.dev/
+
+[settings]
+experimental = true  # Enable experimental features (required for ubi backend)
+paranoid = true      # Enable strict security checks and verification
+
+[env]
+# Proxy configuration - available during tool installation AND runtime
+HTTP_PROXY = "{{ get_env(name='HTTP_PROXY', default='') }}"
+HTTPS_PROXY = "{{ get_env(name='HTTPS_PROXY', default='') }}"
+NO_PROXY = "{{ get_env(name='NO_PROXY', default='') }}"
+http_proxy = "{{ get_env(name='http_proxy', default='') }}"
+https_proxy = "{{ get_env(name='https_proxy', default='') }}"
+no_proxy = "{{ get_env(name='no_proxy', default='') }}"
+
+[tools]
+# Build and task automation
+"aqua:casey/just" = "1.46.0"
+
+# Release and signing tools
+"aqua:sigstore/cosign" = "3.0.3"
+"aqua:git-chglog/git-chglog" = "0.15.4"
+"aqua:in-toto/witness" = "0.10.1"
+
+# Security scanning
+"aqua:ossf/scorecard" = "5.4.0"
+"aqua:zricethezav/gitleaks" = "8.30.0"
+
+# Linters and formatters
+"aqua:rhysd/actionlint" = "1.7.10"
+"aqua:koalaman/shellcheck" = "0.11.0"
+"aqua:mvdan/sh" = "3.12.0"  # shfmt - Shell formatter
+"aqua:google/yamlfmt" = "0.20.0"
+"github:rvben/rumdl" = "v0.0.173"
+
+# License compliance
+"pipx:reuse" = "6.2.0"

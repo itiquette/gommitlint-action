@@ -1,0 +1,36 @@
+# SPDX-FileCopyrightText: The Gommitlint Action Authors
+#
+# SPDX-License-Identifier: CC0-1.0
+
+# Editor and IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Environment files
+.env
+.env.local
+
+# Tool caches
+.rumdl-cache/
+.rumdl_cache/
+
+# CI-generated release files
+release-notes.md
+changelog-content.md
+attestation.json
+*.checksums.txt
+*.checksums.txt.sig
+*.checksums.txt.cert
+*.checksums.txt.bundle
+scorecard-results.json
+trivy-results.json
+
+# Backup files
+*.bak
+
+# OS-specific
+.DS_Store
+Thumbs.db

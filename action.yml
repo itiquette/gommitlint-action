@@ -1,0 +1,131 @@
+# SPDX-FileCopyrightText: The Gommitlint Action Authors
+#
+# SPDX-License-Identifier: EUPL-1.2
+
+name: 'gommitlint-action'
+description: 'Validate git commit messages against commit rules'
+author: 'Itiquette'
+
+branding:
+  icon: 'check-circle'
+  color: 'green'
+
+inputs:
+  config:
+    description: 'Path to gommitlint config file'
+    required: false
+  base-branch:
+    description: 'Base branch to compare against (e.g., main, origin/main)'
+    required: false
+  range:
+    description: 'Commit range to validate (e.g., HEAD~5..HEAD)'
+    required: false
+  count:
+    description: 'Validate last N commits from HEAD'
+    required: false
+  rules:
+    description: 'Only validate specific rules (comma-separated, e.g., conventional,signoff)'
+    required: false
+  exclude-rules:
+    description: 'Exclude specific rules from validation (comma-separated, e.g., cryptosignature)'
+    required: false
+  format:
+    description: 'Output format: text, json, forgejo, github, gitlab'
+    required: false
+    default: 'github'
+  verbose:
+    description: 'Increase output verbosity for debugging'
+    required: false
+    default: 'false'
+  log-level:
+    description: 'Log level: error, warn, info, debug, trace'
+    required: false
+  skip-verification:
+    description: 'Skip checksum verification of downloaded binary (not recommended)'
+    required: false
+    default: 'false'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Install gommitlint
+      shell: bash
+      env:
+        # renovate: datasource=gitea-releases depName=itiquette/gommitlint registryUrl=https://codeberg.org
+        GOMMITLINT_VERSION: "v0.8.2"
+        SKIP_VERIFICATION: ${{ inputs.skip-verification }}
+      run: |
+        set -euo pipefail
+
+        OS=$(uname -s | tr '[:upper:]' '[:lower:]')
+        ARCH=$(uname -m)
+        case "$ARCH" in aarch64) ARCH="arm64";; esac
+
+        VERSION_NUM="${GOMMITLINT_VERSION#v}"
+        BINARY_NAME="gommitlint-${VERSION_NUM}-${OS}-${ARCH}.tar.gz"
+        CHECKSUMS_NAME="gommitlint_${VERSION_NUM}_checksums.txt"
+        BASE_URL="https://codeberg.org/itiquette/gommitlint/releases/download/${GOMMITLINT_VERSION}"
+
+        echo "Downloading gommitlint ${GOMMITLINT_VERSION} for ${OS}/${ARCH}..."
+
+        # Download binary archive
+        curl -sSfL "${BASE_URL}/${BINARY_NAME}" -o "${BINARY_NAME}"
+
+        # Verify checksum unless explicitly skipped
+        if [[ "${SKIP_VERIFICATION}" != "true" ]]; then
+          echo "Verifying checksum..."
+          curl -sSfL "${BASE_URL}/${CHECKSUMS_NAME}" -o "${CHECKSUMS_NAME}"
+
+          # Extract expected checksum for our binary
+          EXPECTED_CHECKSUM=$(grep "${BINARY_NAME}" "${CHECKSUMS_NAME}" | awk '{print $1}')
+
+          if [[ -z "${EXPECTED_CHECKSUM}" ]]; then
+            echo "ERROR: Could not find checksum for ${BINARY_NAME} in ${CHECKSUMS_NAME}"
+            echo "Available checksums:"
+            cat "${CHECKSUMS_NAME}"
+            exit 1
+          fi
+
+          # Calculate actual checksum
+          ACTUAL_CHECKSUM=$(sha256sum "${BINARY_NAME}" | awk '{print $1}')
+
+          if [[ "${EXPECTED_CHECKSUM}" != "${ACTUAL_CHECKSUM}" ]]; then
+            echo "ERROR: Checksum verification failed!"
+            echo "Expected: ${EXPECTED_CHECKSUM}"
+            echo "Actual:   ${ACTUAL_CHECKSUM}"
+            echo ""
+            echo "This could indicate a corrupted download or supply chain attack."
+            echo "If you trust the source, you can skip verification with: skip-verification: 'true'"
+            exit 1
+          fi
+
+          echo "Checksum verified successfully"
+          rm -f "${CHECKSUMS_NAME}"
+        else
+          echo "WARNING: Skipping checksum verification (not recommended)"
+        fi
+
+        # Extract and setup binary
+        tar xzf "${BINARY_NAME}"
+        EXTRACT_DIR="gommitlint-${VERSION_NUM}-${OS}-${ARCH}"
+        mv "${EXTRACT_DIR}/gommitlint" ./gommitlint
+        chmod +x gommitlint
+        rm -rf "${BINARY_NAME}" "${EXTRACT_DIR}"
+
+        echo "gommitlint ${GOMMITLINT_VERSION} installed successfully"
+
+    - name: Validate commits
+      shell: bash
+      run: |
+        ARGS="validate"
+        [[ -n "${{ inputs.config }}" ]] && ARGS="$ARGS --gommitconfig ${{ inputs.config }}"
+        [[ -n "${{ inputs.base-branch }}" ]] && ARGS="$ARGS --base-branch ${{ inputs.base-branch }}"
+        [[ -n "${{ inputs.range }}" ]] && ARGS="$ARGS --range ${{ inputs.range }}"
+        [[ -n "${{ inputs.count }}" ]] && ARGS="$ARGS --count ${{ inputs.count }}"
+        [[ -n "${{ inputs.rules }}" ]] && ARGS="$ARGS --rule ${{ inputs.rules }}"
+        [[ -n "${{ inputs.exclude-rules }}" ]] && ARGS="$ARGS --exclude-rule ${{ inputs.exclude-rules }}"
+        [[ -n "${{ inputs.format }}" ]] && ARGS="$ARGS --format ${{ inputs.format }}"
+        [[ "${{ inputs.verbose }}" == "true" ]] && ARGS="$ARGS --verbose"
+        [[ -n "${{ inputs.log-level }}" ]] && ARGS="$ARGS --log-level ${{ inputs.log-level }}"
+
+        ./gommitlint $ARGS

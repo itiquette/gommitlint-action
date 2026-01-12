@@ -1,0 +1,258 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "description": "Base Renovate configuration for itiquette organization on GitHub",
+  "osvVulnerabilityAlerts": true,
+  "dependencyDashboardOSVVulnerabilitySummary": "all",
+  "extends": [
+    "config:best-practices",
+    "security:openssf-scorecard",
+    ":gitSignOff",
+    ":semanticCommits",
+    ":semanticCommitTypeAll(chore)",
+    ":separateMultipleMajorReleases",
+    ":rebaseStalePrs",
+    ":automergeMinor",
+    "mergeConfidence:all-badges",
+    ":maintainLockFilesWeekly"
+  ],
+  "platformAutomerge": true,
+  "automergeStrategy": "rebase",
+  "semanticCommitScope": "deps",
+  "commitMessageLowerCase": "auto",
+  "commitBody": "Signed-off-by: {{{gitAuthor}}}",
+  "minimumReleaseAge": "7 days",
+  "timezone": "Europe/Stockholm",
+  "labels": [
+    "dependencies"
+  ],
+  "vulnerabilityAlerts": {
+    "labels": [
+      "security",
+      "dependencies"
+    ],
+    "enabled": true,
+    "automerge": true
+  },
+  "prConcurrentLimit": 6,
+  "prCreation": "immediate",
+  "rangeStrategy": "auto",
+  "lockFileMaintenance": {
+    "enabled": true
+  },
+  "ignorePresets": [
+    ":prHourlyLimit2"
+  ],
+  "schedule": [
+    "after 5pm on Thursday",
+    "before 11:59pm on Sunday"
+  ],
+  "regexManagers": [
+    {
+      "fileMatch": ["^scripts/ci/versions\\.env$"],
+      "matchStrings": ["JUST_VERSION=\"(?<currentValue>[^\"]+)\""],
+      "depNameTemplate": "casey/just",
+      "datasourceTemplate": "github-releases"
+    },
+    {
+      "fileMatch": ["^scripts/ci/versions\\.env$"],
+      "matchStrings": ["SCORECARD_VERSION=\"(?<currentValue>[^\"]+)\""],
+      "depNameTemplate": "ossf/scorecard",
+      "datasourceTemplate": "github-releases",
+      "extractVersionTemplate": "^v(?<version>.*)$"
+    },
+    {
+      "fileMatch": ["^scripts/ci/versions\\.env$"],
+      "matchStrings": ["MISE_VERSION=\"(?<currentValue>[^\"]+)\""],
+      "depNameTemplate": "jdx/mise",
+      "datasourceTemplate": "github-releases",
+      "extractVersionTemplate": "^v(?<version>.*)$"
+    },
+    {
+      "fileMatch": ["^scripts/ci/versions\\.env$"],
+      "matchStrings": ["WITNESS_VERSION=\"(?<currentValue>[^\"]+)\""],
+      "depNameTemplate": "in-toto/witness",
+      "datasourceTemplate": "github-releases",
+      "extractVersionTemplate": "^v(?<version>.*)$"
+    },
+    {
+      "fileMatch": ["^scripts/ci/versions\\.env$"],
+      "matchStrings": ["COSIGN_VERSION=\"(?<currentValue>[^\"]+)\""],
+      "depNameTemplate": "sigstore/cosign",
+      "datasourceTemplate": "github-releases",
+      "extractVersionTemplate": "^v(?<version>.*)$"
+    },
+    {
+      "fileMatch": ["^scripts/ci/versions\\.env$"],
+      "matchStrings": ["GIT_CHGLOG_VERSION=\"(?<currentValue>[^\"]+)\""],
+      "depNameTemplate": "git-chglog/git-chglog",
+      "datasourceTemplate": "github-releases",
+      "extractVersionTemplate": "^v(?<version>.*)$"
+    },
+    {
+      "fileMatch": ["^scripts/ci/versions\\.env$"],
+      "matchStrings": ["GITLEAKS_VERSION=\"(?<currentValue>[^\"]+)\""],
+      "depNameTemplate": "zricethezav/gitleaks",
+      "datasourceTemplate": "github-releases",
+      "extractVersionTemplate": "^v(?<version>.*)$"
+    }
+  ],
+  "packageRules": [
+    {
+      "description": "Redirect upload-artifact to Forgejo-patched version",
+      "matchManagers": [
+        "github-actions"
+      ],
+      "matchPackageNames": [
+        "https://code.forgejo.org/actions/upload-artifact"
+      ],
+      "replacementName": "https://code.forgejo.org/forgejo/upload-artifact",
+      "replacementVersion": "v4"
+    },
+    {
+      "description": "Redirect download-artifact to Forgejo-patched version",
+      "matchManagers": [
+        "github-actions"
+      ],
+      "matchPackageNames": [
+        "https://code.forgejo.org/actions/download-artifact"
+      ],
+      "replacementName": "https://code.forgejo.org/forgejo/download-artifact",
+      "replacementVersion": "v4"
+    },
+    {
+      "description": "Pin Forgejo-patched upload-artifact to v4 (v5+ not compatible)",
+      "matchManagers": [
+        "github-actions"
+      ],
+      "matchPackageNames": [
+        "https://code.forgejo.org/forgejo/upload-artifact"
+      ],
+      "allowedVersions": "<5"
+    },
+    {
+      "description": "Pin Forgejo-patched download-artifact to v4 (v5+ not compatible)",
+      "matchManagers": [
+        "github-actions"
+      ],
+      "matchPackageNames": [
+        "https://code.forgejo.org/forgejo/download-artifact"
+      ],
+      "allowedVersions": "<5"
+    },
+    {
+      "description": "Group all GitHub/Forgejo Actions minor and patch updates",
+      "matchManagers": [
+        "github-actions"
+      ],
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ],
+      "addLabels": [
+        "actions"
+      ],
+      "groupName": "github-forgejo actions",
+      "groupSlug": "actions",
+      "pinDigests": true
+    },
+    {
+      "description": "GitHub/Forgejo Actions - Major updates (no grouping, no automerge)",
+      "matchManagers": [
+        "github-actions"
+      ],
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "addLabels": [
+        "actions",
+        "major-update"
+      ],
+      "automerge": false,
+      "pinDigests": true
+    },
+    {
+      "description": "Label Go module updates",
+      "matchManagers": [
+        "gomod"
+      ],
+      "addLabels": [
+        "go",
+        "dependencies"
+      ]
+    },
+    {
+      "description": "Label Go module major updates",
+      "matchManagers": [
+        "gomod"
+      ],
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "addLabels": [
+        "major-update"
+      ]
+    },
+    {
+      "description": "Group github.com dependencies",
+      "matchPackageNames": [
+        "/^github.com//"
+      ],
+      "groupName": "github dependencies"
+    },
+    {
+      "description": "Group golang.org/x dependencies",
+      "matchPackageNames": [
+        "/^golang.org/x//"
+      ],
+      "groupName": "golang standard library"
+    },
+    {
+      "description": "Group codeberg.org dependencies",
+      "matchPackageNames": [
+        "/^codeberg.org//"
+      ],
+      "groupName": "codeberg dependencies"
+    },
+    {
+      "description": "Group koanf dependencies",
+      "matchPackageNames": [
+        "github.com/knadh/koanf"
+      ],
+      "groupName": "koanf dependencies"
+    },
+    {
+      "description": "Bump Go toolchain range",
+      "matchPackageNames": [
+        "go"
+      ],
+      "matchDepTypes": [
+        "golang"
+      ],
+      "rangeStrategy": "bump"
+    },
+    {
+      "description": "Group Go minor and patch updates",
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ],
+      "matchManagers": [
+        "gomod"
+      ],
+      "groupName": "go dependencies minor and patch updates",
+      "automerge": true,
+      "minimumReleaseAge": "7 days",
+      "matchPackageNames": [
+        "!/^go$/"
+      ]
+    },
+    {
+      "matchManagers": [
+        "regex"
+      ],
+      "addLabels": [
+        "gommitlint"
+      ]
+    }
+  ]
+}
