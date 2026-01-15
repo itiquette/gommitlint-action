@@ -11,27 +11,25 @@ lint := devtools_dir + "/linters"
 
 # Display available recipes
 default:
-    @printf "\033[1;36m gommitlint-action Just Recipes\033[0m\n\n"
+    @printf "\033[1;36m gommitlint-action Just Recipes\033[0m\n"
+    @printf "\n"
+    @printf "Quick start: \033[1;32mjust install\033[0m | \033[1;34mjust lint\033[0m | \033[1;35mjust lint-fix\033[0m\n"
+    @printf "\n"
     @just --list --unsorted
 
 # ==================================================================================== #
 # SETUP
 # ==================================================================================== #
 
-# Install mise and all development tools
+# ▪ Install development tools via mise
 [group('setup')]
-setup:
-    #!/usr/bin/env bash
-    set -euo pipefail
-    if ! command -v mise &> /dev/null; then
-        printf "Installing mise...\n"
-        curl https://mise.run | sh
-        export PATH="$HOME/.local/bin:$PATH"
-    fi
-    printf "Installing development tools via mise...\n"
-    mise trust
-    mise install
-    just setup-devtools
+install: setup-devtools
+    @mise trust
+    @mise install
+
+# Backwards-compatible alias
+[group('setup')]
+setup: install
 
 # Setup just-check (clone or update)
 [group('setup')]
@@ -59,7 +57,7 @@ setup-devtools:
 # LINT (recipes expected by just-check)
 # ==================================================================================== #
 
-# Run all linters
+# ▪ Run all linters
 [group('lint')]
 lint: _ensure-devtools
     @{{devtools_dir}}/scripts/verify.sh
@@ -125,41 +123,46 @@ scorecard:
     scorecard --local . --format default || true
 
 # ==================================================================================== #
-# FIX
+# LINT-FIX - Auto-fix linting violations
 # ==================================================================================== #
 
-# Auto-fix all fixable issues
-[group('fix')]
-lint-fix: fix-yaml fix-shell fix-markdown
+# ▪ Auto-fix all fixable issues
+[group('lint-fix')]
+lint-fix: lint-yaml-fix lint-shell-fix lint-markdown-fix
     @printf "All auto-fixes applied\n"
 
 # Auto-fix YAML files
-[group('fix')]
-fix-yaml:
+[group('lint-fix')]
+lint-yaml-fix:
     @{{lint}}/yaml.sh fix
 
 # Auto-fix shell scripts
-[group('fix')]
-fix-shell:
+[group('lint-fix')]
+lint-shell-fix:
     @{{lint}}/shell-fmt.sh fix
 
 # Auto-fix markdown files
-[group('fix')]
-fix-markdown:
+[group('lint-fix')]
+lint-markdown-fix:
     @{{lint}}/markdown.sh fix MD013
 
 # ==================================================================================== #
 # SECURITY
 # ==================================================================================== #
 
+# ▪ Run security scans
+[group('security')]
+security: security-secrets security-scorecard
+    @printf "Security scans completed\n"
+
 # Scan for secrets in git history
 [group('security')]
-scan-secrets:
+security-secrets:
     gitleaks detect --source . --verbose
 
 # Run OpenSSF Scorecard
 [group('security')]
-scan-scorecard:
+security-scorecard:
     scorecard --local . --format json > scorecard-results.json || true
     @printf "Results saved to scorecard-results.json\n"
 

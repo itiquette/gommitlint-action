@@ -34,3 +34,6 @@ trivy-results.json
 # OS-specific
 .DS_Store
 Thumbs.db
+
+# Claude settings
+.claude

@@ -18,6 +18,7 @@ NO_PROXY = "{{ get_env(name='NO_PROXY', default='') }}"
 http_proxy = "{{ get_env(name='http_proxy', default='') }}"
 https_proxy = "{{ get_env(name='https_proxy', default='') }}"
 no_proxy = "{{ get_env(name='no_proxy', default='') }}"
+PIP_INDEX_URL = "{{ get_env(name='PIP_INDEX_URL', default='') }}"
 
 [tools]
 # Build and task automation
@@ -36,8 +37,8 @@ no_proxy = "{{ get_env(name='no_proxy', default='') }}"
 "aqua:rhysd/actionlint" = "1.7.10"
 "aqua:koalaman/shellcheck" = "0.11.0"
 "aqua:mvdan/sh" = "3.12.0"  # shfmt - Shell formatter
-"aqua:google/yamlfmt" = "0.20.0"
-"github:rvben/rumdl" = "v0.0.173"
+"aqua:google/yamlfmt" = "0.21.0"
+"github:rvben/rumdl" = "0.0.173"
 
 # License compliance
 "pipx:reuse" = "6.2.0"

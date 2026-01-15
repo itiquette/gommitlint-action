@@ -1,0 +1,18 @@
+# SPDX-FileCopyrightText: The Gommitlint Action Authors
+#
+# SPDX-License-Identifier: CC0-1.0
+# Actionlint configuration for Forgejo Actions
+# Custom runner label for self-hosted Forgejo runner on Codeberg
+# One runner cross-compiles for all target OS/architectures
+self-hosted-runner:
+  labels:
+    - ci-builder
+# Path-specific configurations for Forgejo workflows
+# Ignore actionlint errors for Forgejo-specific syntax:
+# - expression: actionlint doesn't recognize forgejo.* context
+# - action: actionlint doesn't recognize full URL action references
+paths:
+  .forgejo/workflows/*.yml:
+    ignore:
+      - 'undefined variable "forgejo"'
+      - 'specifying action .+ in invalid format'

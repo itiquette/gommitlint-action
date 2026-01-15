@@ -8,10 +8,18 @@ Welcome! Thank you for contributing to gommitlint-action.
 
 ## Ways to Contribute
 
-- Fix or report a bug
-- Suggest enhancements
-- Improve documentation
-- Add examples or use cases
+There are multiple ways of getting involved:
+
+As a new contributor, you can provide valuable feedback.
+For example, you could:
+
+- Fix or report a bug.
+
+- Suggest enhancements to code, tests and documentation.
+
+- Report or fix problems found during installation or in development environments.
+
+- Add suggestions for something else that is missing.
 
 ## Community Guideline
 
@@ -21,15 +29,17 @@ Be nice and respectful to each other. We follow the [Simple Contributor Code Of 
 
 Please check briefly if there already exists an Issue with your topic.
 
-### Report a Bug
+### Report a bug
 
 Open an Issue that summarizes the bug and set the label to "bug".
 
-### Suggest a Feature
+### Suggest a feature
 
-To request a new feature, summarize the desired functionality and its use case. Set the Issue label to "enhancement".
+To request a new feature, summarize the desired functionality and its use case. Set the Issue label to "feature" or "enhancement".
 
-## Contribute Code
+## Contribute Code, Documentation and more
+
+Contributing code, documentation, or other improvements:
 
 ### Fork and Pull Request
 
@@ -37,6 +47,17 @@ To request a new feature, summarize the desired functionality and its use case. 
 2. Make your changes with proper commit messages
 3. Submit a pull request to the main project
 4. Address any review feedback
+
+### AI-Assisted Contributions
+
+We don't care whether your PR is written by you or an AI - as long as you follow the contributing guidelines. This means AI-assisted contributions are held to the same standards:
+
+- You are responsible for reviewing your own submission thoroughly before submitting
+- Commits must be properly rebased and follow the commit guidelines
+- Code must meet project quality standards
+- You must be able to explain and defend the changes
+
+The DCO sign-off certifies that *you* have the right to submit the contribution, regardless of how it was authored.
 
 ### Commit Guideline
 
@@ -57,11 +78,11 @@ type(scope): description
 Types: feat, fix, docs, chore, refactor, test
 ```
 
-### Development
+### Development Guidelines
 
-This action is a thin wrapper around [gommitlint](https://codeberg.org/itiquette/gommitlint). For detailed contribution guidelines, see the [gommitlint CONTRIBUTING guide](https://codeberg.org/itiquette/gommitlint/src/branch/main/CONTRIBUTING.md).
+This action is a thin wrapper around [gommitlint](https://codeberg.org/itiquette/gommitlint). For development setup and testing guidance, see the [gommitlint CONTRIBUTING guide](https://codeberg.org/itiquette/gommitlint/src/branch/main/CONTRIBUTING.md).
 
-## Reporting Security Issues
+## Reporting security issues
 
 See [SECURITY.md](SECURITY.md) for how to report vulnerabilities.
 

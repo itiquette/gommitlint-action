@@ -38,5 +38,3 @@ The project team reserves the right to remove, edit, or reject comments, commits
 ## Scope
 
 This Code of Conduct applies within project spaces (repositories, issue trackers, chat channels).
-
-In exceptional cases, the project may decline contributions from individuals convicted of serious violent crimes (e.g., murder, sexual assault). This is about safety, not policing opinions - we don't care what you think, we care what you do.
