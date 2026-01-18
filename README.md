@@ -2,7 +2,7 @@
 
 <div align="center">
 
-[![GitHub Release](https://img.shields.io/github/v/release/itiquette/gommitlint-action?style=for-the-badge&color=green)](https://github.com/itiquette/gommitlint-action/releases)
+[![GitHub Release](https://img.shields.io/github/v/release/itiquette/gommitlint-action?include_prereleases&style=for-the-badge&color=green)](https://github.com/itiquette/gommitlint-action/releases)
 
 [![License: EUPL-1.2](https://img.shields.io/badge/License-EUPL--1.2-blue?style=for-the-badge)](LICENSE)
 [![REUSE](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi.reuse.software%2Fstatus%2Fgithub.com%2Fitiquette%2Fgommitlint-action&query=status&style=for-the-badge&label=REUSE&color=lightblue)](https://api.reuse.software/info/github.com/itiquette/gommitlint-action)
@@ -18,9 +18,9 @@ GitHub Action to validate git commit messages using [gommitlint](https://codeber
 ```yaml
 - uses: actions/checkout@v4
   with:
-    fetch-depth: 0
+    fetch-depth: 0  # Full history needed for commit comparison
 
-- run: git fetch origin main:main
+- run: git fetch origin main:main  # Fetch main branch ref (not available in PR context)
 
 - uses: itiquette/gommitlint-action@v0.8.1
   with:
@@ -61,7 +61,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 0  # Full history needed for commit comparison
 
       - uses: itiquette/gommitlint-action@v0.8.1
         with:
@@ -71,6 +71,22 @@ jobs:
 ### Validate Last N Commits
 
 ```yaml
+- uses: actions/checkout@v4
+  with:
+    fetch-depth: 0  # Full history needed for commit comparison
+
+- uses: itiquette/gommitlint-action@v0.8.1
+  with:
+    count: 5
+```
+
+### Validate Commit Range
+
+```yaml
+- uses: actions/checkout@v4
+  with:
+    fetch-depth: 0  # Full history needed for commit comparison
+
 - uses: itiquette/gommitlint-action@v0.8.1
   with:
     range: HEAD~5..HEAD
@@ -79,6 +95,12 @@ jobs:
 ### Only Check Conventional Commits
 
 ```yaml
+- uses: actions/checkout@v4
+  with:
+    fetch-depth: 0  # Full history needed for commit comparison
+
+- run: git fetch origin main:main  # Fetch main branch ref (not available in PR context)
+
 - uses: itiquette/gommitlint-action@v0.8.1
   with:
     base-branch: main
@@ -88,6 +110,12 @@ jobs:
 ### Skip Signature Checks
 
 ```yaml
+- uses: actions/checkout@v4
+  with:
+    fetch-depth: 0  # Full history needed for commit comparison
+
+- run: git fetch origin main:main  # Fetch main branch ref (not available in PR context)
+
 - uses: itiquette/gommitlint-action@v0.8.1
   with:
     base-branch: main
@@ -97,6 +125,12 @@ jobs:
 ### Allow Merge Commits
 
 ```yaml
+- uses: actions/checkout@v4
+  with:
+    fetch-depth: 0  # Full history needed for commit comparison
+
+- run: git fetch origin main:main  # Fetch main branch ref (not available in PR context)
+
 - uses: itiquette/gommitlint-action@v0.8.1
   with:
     base-branch: main
@@ -106,6 +140,12 @@ jobs:
 ### With Configuration File
 
 ```yaml
+- uses: actions/checkout@v4
+  with:
+    fetch-depth: 0  # Full history needed for commit comparison
+
+- run: git fetch origin main:main  # Fetch main branch ref (not available in PR context)
+
 - uses: itiquette/gommitlint-action@v0.8.1
   with:
     config: .gommitlint.yaml
@@ -125,9 +165,9 @@ This occurs when git can't find a referenced commit or branch. For `base-branch:
 ```yaml
 - uses: actions/checkout@v4
   with:
-    fetch-depth: 0  # Full history, not just latest commit
+    fetch-depth: 0  # Full history needed for commit comparison
 
-- run: git fetch origin main:main  # Fetch main branch ref
+- run: git fetch origin main:main  # Fetch main branch ref (not available in PR context)
 
 - uses: itiquette/gommitlint-action@v0.8.1
   with:
@@ -158,8 +198,8 @@ permissions:
 
 ## Related Projects
 
-- [gommitlint](https://codeberg.org/itiquette/gommitlint) - The commit message linter
-- [gommitlint-action (Forgejo)](https://codeberg.org/itiquette/gommitlint-action) - Forgejo Actions version
+- [gommitlint](https://codeberg.org/itiquette/gommitlint) - The commit message linter itself
+- [gommitlint-action (Forgejo)](https://codeberg.org/itiquette/gommitlint-action) - A Forgejo Actions version of this
 
 ## License
 

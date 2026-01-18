@@ -1,0 +1,24 @@
+# SPDX-FileCopyrightText: Josef Andersson
+#
+# SPDX-License-Identifier: CC0-1.0
+
+name: OpenSSF Scorecard
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: '0 0 * * 0'
+  workflow_dispatch:
+
+permissions: read-all
+
+jobs:
+  scorecard:
+    uses: itiquette/.github/.github/workflows/openssf-scorecard.yml@main
+    permissions:
+      contents: read
+      security-events: write
+      id-token: write
+    with:
+      publish_results: true
