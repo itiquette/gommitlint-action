@@ -21,4 +21,4 @@ jobs:
       security-events: write
       id-token: write
     with:
-      publish_results: true
+      publish-results: true
