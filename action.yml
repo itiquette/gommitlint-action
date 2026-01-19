@@ -52,7 +52,7 @@ runs:
       shell: bash
       env:
         # renovate: datasource=gitea-releases depName=itiquette/gommitlint registryUrl=https://codeberg.org
-        GOMMITLINT_VERSION: "v0.8.8"
+        GOMMITLINT_VERSION: "v0.8.9"
         SKIP_VERIFICATION: ${{ inputs.skip-verification }}
       run: |
         set -euo pipefail
