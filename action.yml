@@ -77,7 +77,7 @@ runs:
           curl -sSfL "${BASE_URL}/${CHECKSUMS_NAME}" -o "${CHECKSUMS_NAME}"
 
           # Extract expected checksum for our binary
-          EXPECTED_CHECKSUM=$(grep "${BINARY_NAME}" "${CHECKSUMS_NAME}" | awk '{print $1}')
+          EXPECTED_CHECKSUM=$(awk -v name="${BINARY_NAME}" '$2 == name {print $1}' "${CHECKSUMS_NAME}")
 
           if [[ -z "${EXPECTED_CHECKSUM}" ]]; then
             echo "ERROR: Could not find checksum for ${BINARY_NAME} in ${CHECKSUMS_NAME}"
