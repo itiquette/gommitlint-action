@@ -25,7 +25,7 @@ PIP_INDEX_URL = "{{ get_env(name='PIP_INDEX_URL', default='') }}"
 "aqua:casey/just" = "1.46.0"
 
 # Release and signing tools
-"aqua:sigstore/cosign" = "3.0.4"
+"aqua:sigstore/cosign" = "3.0.5"
 "aqua:git-chglog/git-chglog" = "0.15.4"
 "aqua:in-toto/witness" = "0.10.2"
 
@@ -34,11 +34,11 @@ PIP_INDEX_URL = "{{ get_env(name='PIP_INDEX_URL', default='') }}"
 "aqua:zricethezav/gitleaks" = "8.30.0"
 
 # Linters and formatters
-"aqua:rhysd/actionlint" = "1.7.10"
+"aqua:rhysd/actionlint" = "1.7.11"
 "aqua:koalaman/shellcheck" = "0.11.0"
 "aqua:mvdan/sh" = "3.12.0"  # shfmt - Shell formatter
 "aqua:google/yamlfmt" = "0.21.0"
-"github:rvben/rumdl" = "0.1.0"
+"github:rvben/rumdl" = "0.1.23"
 
 # License compliance
 "pipx:reuse" = "6.2.0"
