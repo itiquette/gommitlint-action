@@ -22,7 +22,7 @@ GitHub Action to validate git commit messages using [gommitlint](https://codeber
 
 - run: git fetch origin main:main  # Fetch main branch ref (not available in PR context)
 
-- uses: itiquette/gommitlint-action@v0.8.1
+- uses: itiquette/gommitlint-action@v0.9.4
   with:
     base-branch: main
 ```
@@ -63,7 +63,7 @@ jobs:
         with:
           fetch-depth: 0  # Full history needed for commit comparison
 
-      - uses: itiquette/gommitlint-action@v0.8.1
+      - uses: itiquette/gommitlint-action@v0.9.4
         with:
           range: ${{ github.event.pull_request.base.sha }}..${{ github.event.pull_request.head.sha }}
 ```
@@ -75,7 +75,7 @@ jobs:
   with:
     fetch-depth: 0  # Full history needed for commit comparison
 
-- uses: itiquette/gommitlint-action@v0.8.1
+- uses: itiquette/gommitlint-action@v0.9.4
   with:
     count: 5
 ```
@@ -87,7 +87,7 @@ jobs:
   with:
     fetch-depth: 0  # Full history needed for commit comparison
 
-- uses: itiquette/gommitlint-action@v0.8.1
+- uses: itiquette/gommitlint-action@v0.9.4
   with:
     range: HEAD~5..HEAD
 ```
@@ -101,7 +101,7 @@ jobs:
 
 - run: git fetch origin main:main  # Fetch main branch ref (not available in PR context)
 
-- uses: itiquette/gommitlint-action@v0.8.1
+- uses: itiquette/gommitlint-action@v0.9.4
   with:
     base-branch: main
     rules: conventional
@@ -116,7 +116,7 @@ jobs:
 
 - run: git fetch origin main:main  # Fetch main branch ref (not available in PR context)
 
-- uses: itiquette/gommitlint-action@v0.8.1
+- uses: itiquette/gommitlint-action@v0.9.4
   with:
     base-branch: main
     exclude-rules: cryptosignature,signoff
@@ -131,7 +131,7 @@ jobs:
 
 - run: git fetch origin main:main  # Fetch main branch ref (not available in PR context)
 
-- uses: itiquette/gommitlint-action@v0.8.1
+- uses: itiquette/gommitlint-action@v0.9.4
   with:
     base-branch: main
     exclude-rules: linearhistory
@@ -146,7 +146,7 @@ jobs:
 
 - run: git fetch origin main:main  # Fetch main branch ref (not available in PR context)
 
-- uses: itiquette/gommitlint-action@v0.8.1
+- uses: itiquette/gommitlint-action@v0.9.4
   with:
     config: .gommitlint.yaml
     base-branch: main
@@ -169,7 +169,7 @@ This occurs when git can't find a referenced commit or branch. For `base-branch:
 
 - run: git fetch origin main:main  # Fetch main branch ref (not available in PR context)
 
-- uses: itiquette/gommitlint-action@v0.8.1
+- uses: itiquette/gommitlint-action@v0.9.4
   with:
     base-branch: main
 ```
