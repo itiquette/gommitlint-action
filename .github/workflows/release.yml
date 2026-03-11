@@ -14,7 +14,7 @@ permissions:
 
 jobs:
   release:
-    if: false  # Disabled until install-tool.sh is fixed
+    if: false # Disabled until install-tool.sh is fixed
     permissions:
       contents: write
     name: Create release
