@@ -22,7 +22,7 @@ GitHub Action to validate git commit messages using [gommitlint](https://codeber
 
 - run: git fetch origin main:main  # Fetch main branch ref (not available in PR context)
 
-- uses: itiquette/gommitlint-action@v0.9.4
+- uses: itiquette/gommitlint-action@v0.9.10
   with:
     base-branch: main
 ```
@@ -32,7 +32,7 @@ GitHub Action to validate git commit messages using [gommitlint](https://codeber
 | Input | Description | Required | Default |
 |-------|-------------|----------|---------|
 | `config` | Path to gommitlint configuration file | No | - |
-| `base-branch` | Base branch to compare against (e.g., `main`) | No | - |
+| `base-branch` | Base branch to compare against (comma-separated for fallback, e.g., `main,master,develop`) | No | - |
 | `range` | Commit range to validate (e.g., `HEAD~5..HEAD`, `main..HEAD`) | No | - |
 | `count` | Validate last N commits from HEAD | No | - |
 | `rules` | Only validate specific rules (comma-separated) | No | - |
@@ -41,6 +41,7 @@ GitHub Action to validate git commit messages using [gommitlint](https://codeber
 | `verbose` | Increase output verbosity for debugging | No | `false` |
 | `log-level` | Log level: `error`, `warn`, `info`, `debug`, `trace` | No | - |
 | `skip-verification` | Skip binary checksum verification (not recommended) | No | `false` |
+| `no-ci-detect` | Disable automatic CI environment detection | No | `false` |
 
 > **Note**: Use either `base-branch`, `range`, OR `count` - not multiple.
 
@@ -63,7 +64,7 @@ jobs:
         with:
           fetch-depth: 0  # Full history needed for commit comparison
 
-      - uses: itiquette/gommitlint-action@v0.9.4
+      - uses: itiquette/gommitlint-action@v0.9.10
         with:
           range: ${{ github.event.pull_request.base.sha }}..${{ github.event.pull_request.head.sha }}
 ```
@@ -75,7 +76,7 @@ jobs:
   with:
     fetch-depth: 0  # Full history needed for commit comparison
 
-- uses: itiquette/gommitlint-action@v0.9.4
+- uses: itiquette/gommitlint-action@v0.9.10
   with:
     count: 5
 ```
@@ -87,7 +88,7 @@ jobs:
   with:
     fetch-depth: 0  # Full history needed for commit comparison
 
-- uses: itiquette/gommitlint-action@v0.9.4
+- uses: itiquette/gommitlint-action@v0.9.10
   with:
     range: HEAD~5..HEAD
 ```
@@ -101,7 +102,7 @@ jobs:
 
 - run: git fetch origin main:main  # Fetch main branch ref (not available in PR context)
 
-- uses: itiquette/gommitlint-action@v0.9.4
+- uses: itiquette/gommitlint-action@v0.9.10
   with:
     base-branch: main
     rules: conventional
@@ -116,7 +117,7 @@ jobs:
 
 - run: git fetch origin main:main  # Fetch main branch ref (not available in PR context)
 
-- uses: itiquette/gommitlint-action@v0.9.4
+- uses: itiquette/gommitlint-action@v0.9.10
   with:
     base-branch: main
     exclude-rules: cryptosignature,signoff
@@ -131,7 +132,7 @@ jobs:
 
 - run: git fetch origin main:main  # Fetch main branch ref (not available in PR context)
 
-- uses: itiquette/gommitlint-action@v0.9.4
+- uses: itiquette/gommitlint-action@v0.9.10
   with:
     base-branch: main
     exclude-rules: linearhistory
@@ -146,7 +147,7 @@ jobs:
 
 - run: git fetch origin main:main  # Fetch main branch ref (not available in PR context)
 
-- uses: itiquette/gommitlint-action@v0.9.4
+- uses: itiquette/gommitlint-action@v0.9.10
   with:
     config: .gommitlint.yaml
     base-branch: main
@@ -169,7 +170,7 @@ This occurs when git can't find a referenced commit or branch. For `base-branch:
 
 - run: git fetch origin main:main  # Fetch main branch ref (not available in PR context)
 
-- uses: itiquette/gommitlint-action@v0.9.4
+- uses: itiquette/gommitlint-action@v0.9.10
   with:
     base-branch: main
 ```

@@ -15,7 +15,7 @@ inputs:
     description: 'Path to gommitlint config file'
     required: false
   base-branch:
-    description: 'Base branch to compare against (e.g., main, origin/main)'
+    description: 'Base branch to compare against (comma-separated for fallback, e.g., main,master,develop)'
     required: false
   range:
     description: 'Commit range to validate (e.g., HEAD~5..HEAD)'
@@ -44,6 +44,10 @@ inputs:
     description: 'Skip checksum verification of downloaded binary (not recommended)'
     required: false
     default: 'false'
+  no-ci-detect:
+    description: 'Disable automatic CI environment detection'
+    required: false
+    default: 'false'
 
 runs:
   using: 'composite'
@@ -52,7 +56,7 @@ runs:
       shell: bash
       env:
         # renovate: datasource=gitea-releases depName=itiquette/gommitlint registryUrl=https://codeberg.org
-        GOMMITLINT_VERSION: "v0.9.4"
+        GOMMITLINT_VERSION: "v0.9.10"
         SKIP_VERIFICATION: ${{ inputs.skip-verification }}
       run: |
         set -euo pipefail
@@ -127,5 +131,6 @@ runs:
         [[ -n "${{ inputs.format }}" ]] && ARGS="$ARGS --format ${{ inputs.format }}"
         [[ "${{ inputs.verbose }}" == "true" ]] && ARGS="$ARGS --verbose"
         [[ -n "${{ inputs.log-level }}" ]] && ARGS="$ARGS --log-level ${{ inputs.log-level }}"
+        [[ "${{ inputs.no-ci-detect }}" == "true" ]] && ARGS="$ARGS --no-ci-detect"
 
         ./gommitlint $ARGS
