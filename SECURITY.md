@@ -16,7 +16,7 @@ To report a security vulnerability, please provide the following information:
 
 1. **PROJECT**
 
-- Include the URL of the project repository - Example: <https://github.com/itiquette/gommitlint-action>
+- Include the URL of the project repository - Example: <https://codeberg.org/itiquette/gommitlint-action> (upstream) or <https://github.com/itiquette/gommitlint-action> (mirror)
 
 1. **PUBLIC**
 

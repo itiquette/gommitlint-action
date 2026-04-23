@@ -9,7 +9,7 @@
 
 [![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/itiquette/gommitlint-action/badge?style=for-the-badge)](https://scorecard.dev/viewer/?uri=github.com/itiquette/gommitlint-action)
 
-GitHub Action to validate git commit messages using [gommitlint](https://codeberg.org/itiquette/gommitlint).
+GitHub Actions (and Forgejo Actions) workflow to validate git commit messages using [gommitlint](https://codeberg.org/itiquette/gommitlint).
 
 </div>
 
@@ -200,8 +200,8 @@ permissions:
 ## Related Projects
 
 - [gommitlint](https://codeberg.org/itiquette/gommitlint) - The commit message linter itself
-- [gommitlint-action (Forgejo)](https://codeberg.org/itiquette/gommitlint-action) - A Forgejo Actions version of this
+- [gommitlint-action on Codeberg/Forgejo](https://codeberg.org/itiquette/gommitlint-action) - Forgejo Actions port, upstream on libre-hosted infrastructure
 
 ## License
 
-EUPL-1.2
+EUPL-1.2 — a copyleft free software license, GPL-compatible via its compatibility clause.

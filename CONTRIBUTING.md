@@ -41,11 +41,11 @@ To request a new feature, summarize the desired functionality and its use case. 
 
 Contributing code, documentation, or other improvements:
 
-### Fork and Pull Request
+### Fork and Submit a Change Request
 
 1. Fork the repository and create a feature branch
 2. Make your changes with proper commit messages
-3. Submit a pull request to the main project
+3. Submit a change request to the main project — a pull request on GitHub/Forgejo/Gitea, a merge request on GitLab
 4. Address any review feedback
 
 ### AI-Assisted Contributions
@@ -86,7 +86,7 @@ This action is a thin wrapper around [gommitlint](https://codeberg.org/itiquette
 
 See [SECURITY.md](SECURITY.md) for how to report vulnerabilities.
 
-## FOSS Standards
+## FLOSS Standards
 
 This project complies with:
 
